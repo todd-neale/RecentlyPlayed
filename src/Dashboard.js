@@ -1,9 +1,10 @@
 import { useEffect, useState } from 'react'
 import { Container } from 'react-bootstrap'
-import useAuth from './useAuth'
 import SpotifyWebApi from 'spotify-web-api-node'
 import RecentlyPlayed from "./RecentlyPlayed"
-import RecentArtists from "./RecentArtists"
+import Sidebar from "./Sidebar"
+import "./App.css"
+
 
 
 const spotifyApi = new SpotifyWebApi({
@@ -20,7 +21,6 @@ export default function Dashboard({ code }) {
 
   //Remove Duplicate Songs
 
-
   //Filter the Tracks Based on Artist
   const filterArtists = (filter) => {
     setFilteredResults(filter)
@@ -31,18 +31,14 @@ export default function Dashboard({ code }) {
       return filter
   }
 
-  //Get the last chosen filter
-  useEffect(() => {
-    const filter = JSON.parse(localStorage.getItem('items'));
-    if (filter) {
-      setFilteredResults(filter);
-    }
-  }, []);
-
-  //Set the last chosen filter
+  // Set the last chosen filter
   useEffect(() => {
     localStorage.setItem('filter', JSON.stringify(filteredResults));
   }, [filteredResults]);
+  
+  useEffect(() => {
+    filterArtists("")
+  }, [recentlyPlayed])
 
   //Get Access Token From Spotify
   useEffect(() => {
@@ -66,41 +62,29 @@ export default function Dashboard({ code }) {
               }
             })
           )
-        }, function(err) {
-          console.log('Something went wrong!', err);
-    })
+        },
+      )
   }, [accessToken])
 
   return (
-    <Container >
-      <div className="mt-4 text-center"><h1>Your Latest Listens on <span className="text-success">Spotify</span></h1></div>
-      <div className="row justify-content-center mt-5" > 
-        <div className="col-12 col-md-3">
-          <h3 className="ms-2">Filter by Artist</h3>
-          <div className="mt-3 d-flex flex-column" style={{ height: "70vh", overflowY: "auto" }}>
-            <button type="button" className="m-2 btn btn-outline-dark btn-sm" onClick={() => {
-              filterArtists("")}}>All</button>
-            {uniqueArtists.map((artist, i) => (
-                <RecentArtists
-                  artist={artist}
-                  key={i}
-                  setFilter={filterArtists}
-                />
-              ))}
+    <div className="App">
+      <Sidebar uniqueArtists={uniqueArtists} filterArtists={filterArtists}/> 
+      <Container className="dashboard">
+        <div className="mt-5 text-center"><h1>Your Latest Listens on <span className="text-success">Spotify</span></h1></div>
+        <div className="row justify-content-center mt-5" > 
+          <div className="col-12 col-md-10">
+            <h3>Recently Played Tracks</h3>
+            <div className="recently-played-container my-2 mt-3 p-2 bg-light">
+              {filteredResults.map((track, i) => (
+                  <RecentlyPlayed
+                    track={track}
+                    key={i}
+                  />
+                  ))}
+            </div>
           </div>
         </div>
-        <div className="col-12 col-md-6">
-          <h3>Recently Played Tracks</h3>
-          <div className="my-2 mt-3 p-2 bg-light" style={{ height: "70vh", overflowY: "auto" }}>
-            {filteredResults.map((track, i) => (
-                <RecentlyPlayed
-                  track={track}
-                  key={i}
-                />
-                ))}
-          </div>
-        </div>
-      </div>
-    </Container>
+      </Container>
+    </div>
   )
 }

@@ -25,7 +25,7 @@
  - BONUS | On refresh of the page, any applied filter should be persisted.
  ```
 
-### Installation
+## Installation
 
 - Clone and install dependencies locally
 ```
@@ -35,7 +35,7 @@
 ```
 - Make sure you have installed Node in your system.
 
-## Running Locally
+### Running Locally
 - You can start the application in dev mode by running the following command in your terminal.
 ```
     npm run dev

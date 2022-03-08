@@ -6,15 +6,15 @@ const AUTH_URL =
 
 // Get Authorisation Token
 const getAuthToken = (hash) => {
-  const stringAfterHashtag = hash.substring(1);
-  const paramsInUrl = stringAfterHashtag.split("&");
+  const stringAfterHashtag = hash.substring(1)
+  const paramsInUrl = stringAfterHashtag.split("&")
   const paramsSplitUp = paramsInUrl.reduce((accumulater, currentValue) => {
-    console.log(currentValue);
-    const [key, value] = currentValue.split("=");
-    accumulater[key] = value;
-    return accumulater;
-  }, {});
-  return paramsSplitUp;
+    console.log(currentValue)
+    const [key, value] = currentValue.split("=")
+    accumulater[key] = value
+    return accumulater
+  }, {})
+  return paramsSplitUp
 };
 
 export default function Login() {
@@ -22,13 +22,13 @@ export default function Login() {
   useEffect(() => {
     if (window.location.hash) {
       const { access_token, expires_in, token_type } =
-      getAuthToken(window.location.hash);
+      getAuthToken(window.location.hash)
 
-      localStorage.clear();
+      localStorage.clear()
 
-      localStorage.setItem("accessToken", access_token);
-      localStorage.setItem("tokenType", token_type);
-      localStorage.setItem("expiresIn", expires_in);
+      localStorage.setItem("accessToken", access_token)
+      localStorage.setItem("tokenType", token_type)
+      localStorage.setItem("expiresIn", expires_in)
     }
   });
 
