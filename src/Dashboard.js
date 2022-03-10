@@ -25,6 +25,7 @@ export default function Dashboard({ code }) {
           setFilteredResults(filteredData)
       } else { setFilteredResults(recentlyPlayed) }
   }
+  
   //Set the Header
   const setHeader = (artist) => {
     if (artist) {
