@@ -36,7 +36,7 @@ Build a Single Page Application using Spotify Web API to meet the below requirem
 ```
 - Make sure you have Node installed on your system.
 
-- If you run into a `403 error` on installation, please contact me and I will set permissions for the email account wishing to access the dashboard.
+- If you run into a `403 error` when signing in, please contact me and I will set permissions for the email account wishing to access the dashboard.
 
 ### Running Locally
 
